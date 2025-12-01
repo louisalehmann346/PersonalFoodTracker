@@ -1,4 +1,5 @@
 require('dotenv').config()
+MONGO_URI = "mongodb+srv://louisalehmann346_db_user:87654321@cluster0.itts8nn.mongodb.net/Cluster0?retryWrites=true&w=majority"
 const mongoose = require('mongoose')
 
 const express = require('express');
@@ -6,7 +7,7 @@ const express = require('express');
 // creating the express app
 const app = express();
 
-mongoose.connect(process.env.MONGO_URI).then( ()=> {
+mongoose.connect(MONGO_URI).then( ()=> {
     console.log("MONGO CONNECTED!!!");
 }).catch( (err) => {
     console.log("Failure to connect");
