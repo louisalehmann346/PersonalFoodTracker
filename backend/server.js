@@ -1,9 +1,17 @@
-require('dotenv').config();
+require('dotenv').config()
+const mongoose = require('mongoose')
 
 const express = require('express');
 
 // creating the express app
 const app = express();
+
+mongoose.connect(process.env.MONGO_URI).then( ()=> {
+    console.log("MONGO CONNECTED!!!");
+}).catch( (err) => {
+    console.log("Failure to connect");
+    process
+})
 
 // Middleware
 app.use((req, res, next) => {
