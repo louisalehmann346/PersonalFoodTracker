@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Goals = () => {
     const [currentGoal, setCurrentGoal] = useState(""); // from DB
