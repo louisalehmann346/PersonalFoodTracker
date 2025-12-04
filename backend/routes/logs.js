@@ -7,13 +7,11 @@ router.post("/", async (req, res) => {
   try {
     const {userId, meal, date} = req.body;
     console.log(req.body);
-    const mealDoc = await Meal.findOne({name: meal});
-
+    
     const newLog = new Tracker({
-    username: userId,     
-    date: date,                                 
-    caloriesConsumed: mealDoc.calories,
-    proteinConsumed: mealDoc.protein
+      username: userId,
+      date: date,
+      meal: meal
     });
     await newLog.save();
     res.status(201).json(newLog);
