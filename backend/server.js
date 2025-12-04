@@ -1,6 +1,6 @@
 require('dotenv').config()
-const mongoose = require('mongoose')
-
+const mongoose = require('mongoose');
+const cors = require("cors");
 const express = require('express');
 
 // creating the express app
@@ -8,29 +8,7 @@ const app = express();
 
 (async ()=> {
     try {
-    await mongoose.connect(process.env.MONGO_URI);
-
-    const MealSchema = new mongoose.Schema({
-      name: String,
-      calories: Number,
-      protein: Number
-    });
-    const Meal = mongoose.model("Meal", MealSchema);
-
-    const userSchema = new mongoose.Schema({
-      username: String,
-      password: String,
-      weeklyGoal: Number
-    });
-    const User = mongoose.model("User", userSchema);
-
-    const TrackerSchema = new mongoose.Schema({
-      username: String,
-      date: Date,
-      caloriesConsumed: Number
-    });
-    const Tracker = mongoose.model("Tracker", TrackerSchema);
-
+        await mongoose.connect(process.env.MONGO_URI);
     } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     } 
@@ -42,10 +20,14 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cors());
+
 // routes
 app.get('/', (req, res) => {
     res.json({mssg: 'Welcome to the app'});
 });
+
+app.use('/api/meals', require('./routes/meals'));
 
 // listen for requests
 // access the port specified in .env

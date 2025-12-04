@@ -14,6 +14,7 @@ function App() {
           <Link to="/dashboard">Dashboard</Link>
         </nav>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/log" element={<Log />} />
           <Route path="/dashboard" element={<Dashboard />} />
