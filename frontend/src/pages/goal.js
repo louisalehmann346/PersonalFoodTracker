@@ -5,7 +5,7 @@ const Goals = () => {
     const [newGoal, setNewGoal] = useState("");
 
     useEffect(() => {
-        fetch("http://localhost:4000/api/returnGoal?userId=john_doe")
+        fetch("http://localhost:4000/api/returnGoal?userId=john_doe") // replace with actual user ID logic
         .then((res) => res.json())
         .then((data) => setCurrentGoal(data.weeklyGoal ?? ""))
         .catch((err) => console.error("Error fetching goal:", err));
@@ -18,7 +18,7 @@ const Goals = () => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ userId: "john_doe",  goal: newGoal }),
+            body: JSON.stringify({ userId: "john_doe",  goal: newGoal }), // replace with actual user ID logic
         })
         .then((res) => res.json())
         .then((data) => {

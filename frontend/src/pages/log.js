@@ -4,14 +4,26 @@ const Log = () => {
     const [mealOptions, setMealOptions] = useState([]);
     const [selectedMeal, setSelectedMeal] = useState("");
     const [date, setDate] = useState("");
+    const [logs, setLogs] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:4000/api/meals")
+        fetch("http://localhost:4000/api/returnMeals")
         .then((res) => res.json())
         .then((data) => {
           setMealOptions(data);
         })
         .catch((err) => console.error("Error fetching meals:", err));
+    }, []);
+
+    const fetchLogs = () => {
+        fetch("http://localhost:4000/api/returnTracker?userId=john_doe") // replace with actual user ID logic
+        .then((res) => res.json())
+        .then((data) => setLogs(Array.isArray(data) ? data : []))
+        .catch((err) => console.error("Error fetching logs:", err));
+    };
+
+    useEffect(() => {
+        fetchLogs();
     }, []);
 
     const handleSubmit = async (e) => {
@@ -26,13 +38,15 @@ const Log = () => {
         console.log("Submitting new tracker:", newTracker);
 
         try {
-          const res = await fetch("http://localhost:4000/api/tracker", {
+          fetch("http://localhost:4000/api/setTracker", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(newTracker)
-          });
-          const data = await res.json();
-          console.log("Meal logged successfully:", data);
+          })
+          .then((res) => res.json())
+          .then(() => {
+            fetchLogs();
+          })
 
           setSelectedMeal("");
           setDate("");
@@ -72,6 +86,33 @@ const Log = () => {
         <br />
         <button type="submit">Log Meal</button>
       </form>
+      <div>
+<h2>User Logs</h2>
+      {logs.length === 0 ? (
+        <p>No logs found.</p>
+      ) : (
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Meal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {logs.map((log, index) => (
+              <tr key={index}>
+                <td>
+                  {new Date(log.date).toLocaleDateString("en-US", {
+                    timeZone: "UTC",
+                  })}
+                </td>
+                <td>{log.meal}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
     </div>
     )
 };

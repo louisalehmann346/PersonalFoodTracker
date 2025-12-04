@@ -29,9 +29,9 @@ app.get('/', (req, res) => {
     res.json({mssg: 'Welcome to the app'});
 });
 
-app.use('/api/meals', require('./routes/meals'));
-app.use("/api/tracker", require("./routes/logs"));
-app.use("/api/loggings", require("./routes/tracker"));
+app.use('/api/returnMeals', require('./routes/returnMeals'));
+app.use("/api/setTracker", require("./routes/setTracker"));
+app.use("/api/returnTracker", require("./routes/returnTracker"));
 app.use("/api/setGoal", require("./routes/setGoal"));
 app.use("/api/returnGoal", require("./routes/returnGoal"));
 
