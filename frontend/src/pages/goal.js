@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Goals = () => {
-    const [currentGoal, setCurrentGoal] = useState(""); // from DB
+    const [currentGoal, setCurrentGoal] = useState("");
     const [newGoal, setNewGoal] = useState("");
 
     useEffect(() => {
         fetch("http://localhost:4000/api/returnUser?userId=john_doe") // replace with actual user ID logic
         .then((res) => res.json())
-        .then((data) => setCurrentGoal(data.weeklyGoal ?? ""))
+        .then((data) => setCurrentGoal(data.dailyGoal ?? ""))
         .catch((err) => console.error("Error fetching goal:", err));
     }, []);
     

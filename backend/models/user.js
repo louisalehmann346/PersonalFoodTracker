@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
         type: String,
         required: true
       },
-      weeklyGoal: Number
+      dailyGoal: Number
     });
 
 module.exports = mongoose.model("User", userSchema);

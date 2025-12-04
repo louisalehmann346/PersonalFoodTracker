@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
     
     await User.updateOne(
     { username: userId },
-    { $set: { weeklyGoal: goal } }
+    { $set: { dailyGoal: goal } }
     );
 
     res.status(201).json({ message: "Goal updated successfully" });
