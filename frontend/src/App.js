@@ -1,17 +1,24 @@
-import { BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from './pages/home';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Login from "./pages/login";
+import Log from "./pages/log";
+import Dashboard from "./pages/dashboard";
+import NotFound from "./pages/notFound";
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="pages">
-          <Routes>
-            <Route 
-              path="/"
-              element={<Home/>}
-            />
-          </Routes>
-        </div>
+        <nav>
+          <Link to="/login">Login</Link> |{" "}
+          <Link to="/log">Log</Link> |{" "}
+          <Link to="/dashboard">Dashboard</Link>
+        </nav>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/log" element={<Log />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
