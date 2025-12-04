@@ -33,7 +33,7 @@ app.use('/api/returnMeals', require('./routes/returnMeals'));
 app.use("/api/setTracker", require("./routes/setTracker"));
 app.use("/api/returnTracker", require("./routes/returnTracker"));
 app.use("/api/setGoal", require("./routes/setGoal"));
-app.use("/api/returnGoal", require("./routes/returnGoal"));
+app.use("/api/returnUser", require("./routes/returnUser"));
 
 // listen for requests
 // access the port specified in .env
