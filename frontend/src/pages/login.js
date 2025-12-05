@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [inputPassword, setInputPassword] = useState("");
     const [storedPassword, setStoredPassword] = useState("");
     const [message, setMessage] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:4000/api/returnUser?userId=${username}`)
@@ -22,12 +24,20 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!storedPassword) {
+        if (username === "") {
+            setMessage("Username cannot be empty");
+            return;
+        }
+        else if (inputPassword === "") {
+            setMessage("Password cannot be empty");
+            return;
+        }
+        else if (!storedPassword) {
             setMessage("Username does not exist");
             return;
         }
-        if (inputPassword === storedPassword) {
-            setMessage("Login successful");
+        else if (inputPassword === storedPassword) {
+            navigate("/dashboard");
         } else {
             setMessage("Incorrect password");
         }
@@ -55,6 +65,7 @@ const Login = () => {
         </label>
         <br />
         <button type="submit">Log In</button>
+        <button type="button" onClick={() => navigate("/register")}>Register</button>
       </form>
       {message && <p>{message}</p>}
         </div>

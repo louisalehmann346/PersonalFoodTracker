@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "../styles.css"
+import Header from "./navbar";
 
 const Log = () => {
     const [mealOptions, setMealOptions] = useState([]);
@@ -56,8 +58,22 @@ const Log = () => {
         }
     };
 
+    const handleDelete = async (logId) => {
+      try {
+        await fetch(`http://localhost:4000/api/deleteTracker/${logId}`, {
+          method: "DELETE",
+        });
+        fetchLogs();
+      } catch (err) {
+        console.error("Error deleting log:", err);
+      }
+    };
+
     return (
     <div className="log-page">
+      <Header />
+      <br />
+      <br />
       <h2>Log a Meal for Yourself</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -98,6 +114,7 @@ const Log = () => {
               <th>Meal</th>
               <th>Calories (kCal)</th>
               <th>Protein (g)</th>
+              <th>(Delete)</th>
             </tr>
           </thead>
           <tbody>
@@ -111,6 +128,7 @@ const Log = () => {
                 <td>{log.meal}</td>
                 <td>{mealOptions.find(meal => meal.name === log.meal)?.calories || "N/A"}</td>
                 <td>{mealOptions.find(meal => meal.name === log.meal)?.protein || "N/A"}</td>
+                <td><button onClick={() => handleDelete(log._id)}>Delete</button></td>
               </tr>
             ))}
           </tbody>

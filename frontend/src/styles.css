@@ -54,8 +54,6 @@ body {
 .nav_link:hover,
 .nav_link:focus {
     color: rgba(112, 246, 130, 1);
-
-
 }
 
 .nav_link::after {
