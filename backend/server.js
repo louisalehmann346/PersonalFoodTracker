@@ -36,6 +36,7 @@ app.use("/api/setGoal", require("./routes/setGoal"));
 app.use("/api/returnUser", require("./routes/returnUser"));
 app.use("/api/setUser", require("./routes/setUser"));
 app.use("/api/deleteTracker", require("./routes/deleteTracker"));
+app.use("/api/returnByDate", require("./routes/returnByDate"));
 
 // listen for requests
 // access the port specified in .env
