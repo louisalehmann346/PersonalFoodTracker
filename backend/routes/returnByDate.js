@@ -5,8 +5,8 @@ const Meal = require("../models/meal");
 
 router.get("/", async (req, res) => {
   try {
-    const userId = req.query.userId || "john_doe"; // Default userId for testing
-    // const { today } = req.body;
+    const userId = req.query.userId;
+    console.log("UserId for aggregation:", userId);
     const today = new Date();
 
     const startOfMonthStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-01`;
@@ -36,12 +36,6 @@ router.get("/", async (req, res) => {
       { $unwind: "$mealInfo" },
 
       {
-        $addFields: {
-          day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
-        }
-      },
-
-      {
         $group: {
           _id: "$day",
           totalCalories: { $sum: "$mealInfo.calories" },
@@ -54,7 +48,7 @@ router.get("/", async (req, res) => {
         }
       }
     ]);
-    console.log("Aggregation result:", result);
+
     res.json(result);
   } catch (err) {
     console.error(err);
