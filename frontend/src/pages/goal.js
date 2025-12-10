@@ -48,7 +48,6 @@ const Goals = ({username}) => {
     return (
     <div className="log-page">
       <h2>Set Your Goal</h2>
-      <h3>Current goal: {currentGoal}</h3>
       <div className="form">
         <form onSubmit={handleSubmit}>
           <label>

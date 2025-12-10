@@ -1,17 +1,29 @@
 import "../styles.css"
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import axios from "axios";
+import Goals from "./goal";
 const apiUrl = "http://localhost:4000/";
 
 
 const Dashboard = ({username}) => {
     const [byDate, setByDate] = React.useState([]);
+    const [currentGoal, setCurrentGoal] = useState(0);
+
 
     useEffect(() => {
         fetch(`${apiUrl}api/returnByDate?userId=${username}`) 
         .then(response => response.json())
         .then(data => setByDate(data))
-        .catch(error => console.error("Error fetching byDate data:", error));        
+        .catch(error => console.error("Error fetching byDate data:", error));      
     }, [username]);
+
+    useEffect(() => {
+        axios.get(`${apiUrl}api/returnUser?userId=${username}`) // replace with actual user ID logic
+         .then((response) => {
+            setCurrentGoal(response.data.dailyGoal ?? 0);
+         })
+         .catch((err) => console.error("Error fetching goal:", err));
+      }, [username]);
 
     const byDateMap = React.useMemo(() => {
     const map = {};
@@ -53,14 +65,33 @@ const Dashboard = ({username}) => {
                 day.className = 'gridbox-item';
                 day.innerHTML = `Day ${i}`;
 
+
                 if (dayData) {
+                    const dayGoal = document.createElement("p");
+                    dayGoal.className = 'goal';
+                    dayGoal.innerHTML = `Current Goal: ${currentGoal}`;
+                    day.appendChild(dayGoal);
+
                     const calories = document.createElement("p");
                     calories.textContent = `Calories: ${dayData.totalCalories}`;
                     day.appendChild(calories);
 
+                    const metGoal = document.createElement("p");
+                    if (dayData.totalCalories > currentGoal) {
+                        metGoal.className = 'metGoal';
+                        metGoal.innerHTML = 'Met Goal!';
+                    } else {
+                        metGoal.className = 'notGoal';
+                        metGoal.innerHTML = 'Did not meet goal!';
+
+                    }
+                    day.appendChild(metGoal);
+
                     const protein = document.createElement("p");
                     protein.innerHTML = `Protein: ${dayData.totalProtein}<br><br><b>Meals:</b>`;
                     day.appendChild(protein);
+
+
 
                     const list = document.createElement("ul");
                     dayData.meals.forEach(m => {
@@ -98,6 +129,8 @@ const Dashboard = ({username}) => {
             <h2>Dashboard</h2>
             {/* Option to switch through years / months */}
             <h3>Month: {month1}</h3>
+            {/* <Goals/> */}
+            <h3 className="goal"></h3>
             <h3>Year: {year}</h3>
             <div className="day_names">
                     <h5> Sunday</h5>
@@ -111,9 +144,6 @@ const Dashboard = ({username}) => {
                 
 
             <div className="gridbox-container" id="Calendar" ref={Calendar}>
-            {/* TO DO WORK ON MAKING THIS AN ARRAY OF DAYS */}
-                {/* <div className="gridbox-item">Day 1</div> */}
-
 
             </div>
         </div>

@@ -133,7 +133,16 @@ body {
     border-radius: 10px;
     padding: 5px;
     margin: 0px;
+}
 
+.goal {
+    color: greenyellow;
+}
+.metGoal {
+    color: greenyellow;
+}
+.notGoal {
+    color: rgb(250, 63, 63);
 }
 .gridbox-container {
     display: grid;
@@ -153,6 +162,11 @@ body {
 .gridbox-item:hover{
     background-color: rgba(236, 254, 235, 0.5);
 }
+
+.day_names ul li {
+    color: green;
+}
+/* Login styles */
 
 .login {
     margin-top: 100px;
