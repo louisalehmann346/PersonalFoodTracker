@@ -1,7 +1,6 @@
 import "../styles.css"
 import React, { useRef, useEffect, useState } from 'react';
 import axios from "axios";
-import Goals from "./goal";
 const apiUrl = "http://localhost:4000/";
 
 
@@ -18,12 +17,12 @@ const Dashboard = ({username}) => {
     }, [username]);
 
     useEffect(() => {
-        axios.get(`${apiUrl}api/returnUser?userId=${username}`) // replace with actual user ID logic
+        axios.get(`${apiUrl}api/returnUser?userId=${username}`) 
          .then((response) => {
             setCurrentGoal(response.data.dailyGoal ?? 0);
          })
          .catch((err) => console.error("Error fetching goal:", err));
-      }, [username]);
+      }, [username, currentGoal]);
 
     const byDateMap = React.useMemo(() => {
     const map = {};
@@ -67,10 +66,10 @@ const Dashboard = ({username}) => {
 
 
                 if (dayData) {
-                    const dayGoal = document.createElement("p");
-                    dayGoal.className = 'goal';
-                    dayGoal.innerHTML = `Current Goal: ${currentGoal}`;
-                    day.appendChild(dayGoal);
+                    // const dayGoal = document.createElement("p");
+                    // dayGoal.className = 'goal';
+                    // dayGoal.innerHTML = `Current Goal: ${currentGoal}`;
+                    // day.appendChild(dayGoal);
 
                     const calories = document.createElement("p");
                     calories.textContent = `Calories: ${dayData.totalCalories}`;
@@ -82,8 +81,8 @@ const Dashboard = ({username}) => {
                         metGoal.innerHTML = 'Met Goal!';
                     } else {
                         metGoal.className = 'notGoal';
-                        metGoal.innerHTML = 'Did not meet goal!';
-
+                        //metGoal.innerHTML = 'Did not meet goal!';
+                        metGoal.innerHTML = `${currentGoal - dayData.totalCalories} calories below goal!`;
                     }
                     day.appendChild(metGoal);
 
@@ -120,7 +119,7 @@ const Dashboard = ({username}) => {
         j++;
     }
 
-    }, [byDateMap, j, year, month]);
+    }, [byDateMap, j, year, month, currentGoal]);
 
     return (
         
@@ -129,9 +128,8 @@ const Dashboard = ({username}) => {
             <h2>Dashboard</h2>
             {/* Option to switch through years / months */}
             <h3>Month: {month1}</h3>
-            {/* <Goals/> */}
-            <h3 className="goal"></h3>
             <h3>Year: {year}</h3>
+            <h3>Daily Calorie Goal: {currentGoal}</h3>
             <div className="day_names">
                     <h5> Sunday</h5>
                     <h5>Monday</h5>
