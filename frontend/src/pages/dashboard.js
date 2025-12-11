@@ -1,7 +1,7 @@
 import "../styles.css"
 import React, { useRef, useEffect, useState } from 'react';
 import axios from "axios";
-const apiUrl = "http://localhost:4000/";
+const apiUrl = "https://personalfoodtracker.onrender.com/";
 
 
 const Dashboard = ({username}) => {
