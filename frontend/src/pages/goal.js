@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles.css";
 import "../goal.css";
-const apiUrl = "http://localhost:4000/";
+const apiUrl = "https://personalfoodtracker.onrender.com/";
 
 const Goals = ({username}) => {
     const [currentGoal, setCurrentGoal] = useState(0);
