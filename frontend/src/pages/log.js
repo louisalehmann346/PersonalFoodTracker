@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles.css"
 import axios from "axios";
-const apiUrl = "http://localhost:4000/";
+const apiUrl = "https://personalfoodtracker.onrender.com/";
 
 const Log = ({username}) => {
     const [mealOptions, setMealOptions] = useState([]);
