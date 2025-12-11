@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
-const apiUrl = "http://localhost:4000/";
+const apiUrl = "https://personalfoodtracker.onrender.com/";
 
 const Register = ({ setUsername }) => {
     const [inputUsername, setInputUsername] = useState("");
